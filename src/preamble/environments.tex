@@ -1,0 +1,37 @@
+\newenvironment{2qu}
+{
+\begin{enumerate}[label=(\alph*)]
+}
+{\end{enumerate}}
+
+\newenvironment{3qu}
+{
+\begin{enumerate}[label=(\roman*)]
+}
+{\end{enumerate}}
+
+\newenvironment{list0.5}
+{
+\begin{enumerate}
+\setlength\itemsep{0.5em}
+}
+{\end{enumerate}}
+
+\newenvironment{problems}
+{
+    \subsection{Problems}
+    \begin{enumerate}
+    \setlength\itemsep{1em}
+}
+{\end{enumerate}}
+
+\newenvironment{+problems}
+{
+    \subsubsection{Problems}
+    \begin{enumerate}
+    \setlength\itemsep{1em}
+}
+{\end{enumerate}}
+
+\captionsetup{width=0.8\textwidth}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
