@@ -27,6 +27,29 @@
 {
     \subsection{Problems}
     \begin{enumerate}
-    \setlength\itemsep{1em}
 }
 {\end{enumerate}}
+
+\newenvironment{solutions}
+{
+    \subsection{Solutions}
+    \begin{enumerate}
+}
+{\end{enumerate}}
+
+\def\sampleT{\setbox0=\hbox{\bf Sample: }%
+   \noindent \hangindent=\wd0 \box0 \ignorespaces
+}
+
+\def\answerT{\setbox0=\hbox{\bf Answer: }%
+   \noindent \hangindent=\wd0 \box0 \ignorespaces
+}
+
+\newenvironment{sample}[1]
+{
+    \sampleT
+    #1
+
+    \answerT
+}
+{}

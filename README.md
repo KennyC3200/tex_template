@@ -1,6 +1,7 @@
 # LaTex Template
 
 # TODO
+- Better tables?
 - `production` and `remote` branches? The production branch will include the `/tests` folder. The tests will include:
     - Driving academy glossary terms
 - Dynamic compilation: compile in both `main.tex` and in `unit_##.tex`
