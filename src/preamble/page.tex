@@ -1,7 +1,57 @@
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{textcomp}
 \usepackage[a4paper, left=1in, right=1in, top=1in, bottom=1in]{geometry}
 \usepackage[Rejne]{fncychap}
+\usepackage{lipsum}
+
+% don't label section and subsection
+\pagenumbering{arabic}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{0}
+
+% clickable TOC sections
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+% fancy headers
+\usepackage{fancyhdr}
+\hypersetup{hidelinks}
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+% \fancyhead[R]{Unit \thechapter}
+\newcommand{\myheader}[2]{#1: #2}
+% \fancyhead[R]{\myheader{\leftmark}{\rightmark}}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\fancyhead[R]{\myheader{\leftmark}{\rightmark}}
+\fancyfoot[R]{\thepage}
+\setlength{\parindent}{0pt}
+
+% reduce spacing with \section and \subsection
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{\baselineskip}{0.2\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{0.2\baselineskip}
+\titleformat{\section}
+    {\fontsize{14}{16}\sffamily\MakeUppercase} % format for whole line
+    {\thesection}                              % how to show number
+    {1em}                                      % space between number and text
+    {}                                         % formatting for just the text
+    []                                         % formatting for after the text
+\titleformat{\subsection}
+    {\fontsize{12}{16}\sffamily\bfseries\selectfont} % format for whole line
+    {\thesection}                                    % how to show number
+    {1em}                                            % space between number and text
+    {}                                               % formatting for just the text
+    []                                               % formatting for after the text
+
 
 % rename "chapter" to "unit"
 \renewcommand{\chaptername}{Unit}

@@ -1,26 +1,19 @@
-\newenvironment{2qu}
+\newenvironment{enum}
+{
+\begin{enumerate}
+\setlength\itemsep{0.5em}
+}
+{\end{enumerate}}
+
+\newenvironment{enum-alpha}
 {
 \begin{enumerate}[label=(\alph*)]
 }
 {\end{enumerate}}
 
-\newenvironment{3qu}
+\newenvironment{enum-roman}
 {
 \begin{enumerate}[label=(\roman*)]
-}
-{\end{enumerate}}
-
-\newenvironment{list0.5}
-{
-\begin{enumerate}
-\setlength\itemsep{0.5em}
-}
-{\end{enumerate}}
-
-\newenvironment{enum}
-{
-\begin{enumerate}
-\setlength\itemsep{0.5em}
 }
 {\end{enumerate}}
 
@@ -33,14 +26,6 @@
 \newenvironment{problems}
 {
     \subsection{Problems}
-    \begin{enumerate}
-    \setlength\itemsep{1em}
-}
-{\end{enumerate}}
-
-\newenvironment{+problems}
-{
-    \subsubsection{Problems}
     \begin{enumerate}
     \setlength\itemsep{1em}
 }
