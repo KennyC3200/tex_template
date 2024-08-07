@@ -10,6 +10,23 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{0}
 
+% reduce spacing with \section and \subsection
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{\baselineskip}{0.2\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{0.2\baselineskip}
+\titleformat{\section}
+    {\fontsize{14}{16}\sffamily\MakeUppercase} % format for whole line
+    {\thesection}                              % how to show number
+    {1em}                                      % space between number and text
+    {}                                         % formatting for just the text
+    []                                         % formatting for after the text
+\titleformat{\subsection}
+    {\fontsize{12}{16}\sffamily\bfseries\selectfont} % format for whole line
+    {\thesection}                                    % how to show number
+    {1em}                                            % space between number and text
+    {}                                               % formatting for just the text
+    []                                               % formatting for after the text
+
 % clickable TOC sections
 \usepackage{hyperref}
 \hypersetup{
@@ -34,24 +51,6 @@
 \fancyhead[R]{\myheader{\leftmark}{\rightmark}}
 \fancyfoot[R]{\thepage}
 \setlength{\parindent}{0pt}
-
-% reduce spacing with \section and \subsection
-\usepackage{titlesec}
-\titlespacing*{\section}{0pt}{\baselineskip}{0.2\baselineskip}
-\titlespacing*{\subsection}{0pt}{\baselineskip}{0.2\baselineskip}
-\titleformat{\section}
-    {\fontsize{14}{16}\sffamily\MakeUppercase} % format for whole line
-    {\thesection}                              % how to show number
-    {1em}                                      % space between number and text
-    {}                                         % formatting for just the text
-    []                                         % formatting for after the text
-\titleformat{\subsection}
-    {\fontsize{12}{16}\sffamily\bfseries\selectfont} % format for whole line
-    {\thesection}                                    % how to show number
-    {1em}                                            % space between number and text
-    {}                                               % formatting for just the text
-    []                                               % formatting for after the text
-
 
 % rename "chapter" to "unit"
 \renewcommand{\chaptername}{Unit}
