@@ -1,10 +1,10 @@
 # LaTex Template
 
 # TODO
+- Option (0) to create new project
 - Better tables?
 - `production` and `remote` branches? The production branch will include the `/tests` folder. The tests will include:
     - Driving academy glossary terms
-- Dynamic compilation: compile in both `main.tex` and in `unit_##.tex`
 - [Shell Scripts](https://helpful.wiki/zsh/)
     1. Creates a new `unit_##` folder
         - Add: Python script that appends the new unit to the end of `main.tex`
