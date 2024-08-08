@@ -23,11 +23,10 @@ class Unit:
 
     def __init__(self, number):
         self.number = number
-
-        number_str = str(number) if number >= 10 else "0" + str(number)
+        self.number_str = str(number) if number >= 10 else "0" + str(number)
         self.file_data = FileData(
-            f"./src/unit_{number_str}/"
-            f"unit_{number_str}.tex"
+            f"./src/unit_{self.number_str}/"
+            f"unit_{self.number_str}.tex"
         )
 
     @staticmethod
@@ -39,6 +38,7 @@ class Unit:
              open(unit.file_data.path, "a") as file:
             file_text = template_file.read().rstrip()
             token_replacements = [
+                ["../unit", f"../unit\\_{unit.number_str}"],
                 ["\\title{Unit}", f"\\title{{{name}}}"]
             ]
             for token, replacement in token_replacements:
