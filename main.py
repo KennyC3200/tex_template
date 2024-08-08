@@ -143,16 +143,16 @@ def new_lesson(name):
         file.write(lines)
 
 
-command = int(input("""Commands
-(0) New Template
-(1) New Unit
-(2) New Lesson
-"""))
+command = input("""Commands
+(n) New Template
+(0) New Unit
+(1) New Lesson
+""")
 
-if command == 0:
+if command == "n":
     new_template(input("Template Name: "))
     new_unit(input("Unit Name: "))
-elif command == 1:
+elif command == "0":
     new_unit(input("Unit Name: "))
-elif command == 2:
+elif command == "1":
     new_lesson(input("Lesson Name: "))
