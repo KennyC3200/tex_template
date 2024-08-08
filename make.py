@@ -83,7 +83,7 @@ class Lesson:
     @staticmethod
     def new(unit_number, name):
         unit = Unit(unit_number)
-        lesson = Lesson(Lesson.current(unit_number).number)
+        lesson = Lesson(Lesson.current(unit).number)
 
         with open(lesson.file_data.path, "a") as file:
             token_replacements = [["Lesson", name]]
@@ -92,7 +92,7 @@ class Lesson:
                 token_replacements)
             file.write(file_text)
 
-        token_replacements = [["\\end{document}", f"\\input{{\\UnitPath/{lesson.file_data.full_filename}}}\n\\end{{document}}"]]
+        token_replacements = [["\\end{document}", f"\\input{{\\UnitDir/{lesson.file_data.full_filename}}}\n\\end{{document}}"]]
         file_text = FileHelper.find_and_replace(
             unit.file_data.path,
             token_replacements)
@@ -100,16 +100,16 @@ class Lesson:
             file.write(file_text)
 
     @staticmethod
-    def current(unit_number):
-        dir = Unit(unit_number).file_data.dir
+    def current(unit):
+        dir = unit.file_data.dir
         files = [x for x in os.listdir(dir) if os.path.isfile(dir + x)]
         lesson_number = 1
 
         for file in files:
-            match = re.search(r"\d+", file)
-            if "lesson_" in file \
-                    and match and int(match.group()) > lesson_number:
-                lesson_number = int(match.group())
+            match = re.search(r"\d+", dir)
+            if "lesson_" in dir \
+                    and match and (x := int(match.group())) > lesson_number:
+                lesson_number = x
 
         return Lesson(lesson_number)
 
