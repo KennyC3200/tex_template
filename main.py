@@ -48,9 +48,9 @@ def current_unit():
 
 
 def preprocess_unit(number, name):
-    path = "./src/unit_00/unit_00.tex"
+    path = "./src/.unit/.unit.tex"
     str_replacements = [
-        {"str": "{../unit\\_00}", "replacement": "{../unit\\_" + (str(number) if number > 10 else "0" + str(number)) + "}"},
+        {"str": "{../.unit\\}", "replacement": "{../unit\\_" + (str(number) if number > 10 else "0" + str(number)) + "}"},
         {"str": "\\title{Unit 0}", "replacement": "\\title{" + name + "}"}
     ]
     lines = file_str_replace(path, str_replacements)
@@ -113,10 +113,10 @@ def preprocess_lesson(unit, lesson):
     with open(path, "w") as file:
         file.write(lines)
 
-    # use the unit/lesson_00.tex as template
-    path = "./src/unit_00/lesson_00.tex"
+    # use the .unit/lesson.tex as template
+    path = "./src/.unit/lesson.tex"
     str_replacements = [
-        {"str": "lesson\\_00", "replacement": lesson["lesson_name"]}
+        {"str": "lesson\\", "replacement": lesson["lesson_name"]}
     ]
     lines = file_str_replace(path, str_replacements)
 
@@ -137,7 +137,6 @@ def new_lesson(name):
     str_replacements = [
         {"str": "\\end{document}", "replacement": "\\input{../" + unit["name"] + "/" + lesson["name"] + "}\n\\end{document}"}
     ]
-    print(str_replacements[0]["replacement"])
     lines = file_str_replace("./src/main/main.tex", str_replacements)
     with open("./src/main/main.tex", "w") as file:
         file.write(lines)
