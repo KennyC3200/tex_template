@@ -2,6 +2,28 @@ import os
 import re
 
 
+def file_str_replace(path, str_replacements):
+    with open(path, "r") as file:
+        lines = file.read().rstrip()
+        for str_replacement in str_replacements:
+            _lines = lines.split(str_replacement["str"])
+            if len(_lines) == 2:
+                lines = "".join([_lines[0], str_replacement["replacement"], _lines[1]])
+            elif len(_lines) == 1:
+                lines = "".join([lines[0], str_replacement["replacement"]])
+
+    return lines
+
+
+def new_template(name):
+    str_replacements = [
+        {"str": "\\title{Template}", "replacement": "\\title{" + name + "}"}
+    ]
+    lines = file_str_replace("./src/main/main.tex", str_replacements)
+    with open("./src/main/main.tex", "w") as file:
+        file.write(lines)
+
+
 def set_unit(number):
     name = "unit_" + (str(number) if number > 10 else "0" + str(number))
     dir = "./src/" + name + "/"
@@ -26,14 +48,12 @@ def current_unit():
 
 
 def preprocess_unit(number, name):
-    with open("./src/unit_00/unit_00.tex") as template:
-        lines = template.read().rstrip()
-        for buffer in [
-            {"regex": "{../unit\\_00}", "replacement": "{../unit\\_" + (str(number) if number > 10 else "0" + str(number)) + "}"},
-            {"regex": "\\title{Unit 0}", "replacement": "\\title{" + name + "}"}
-        ]:
-            _lines = lines.split(buffer["regex"])
-            lines = "".join([_lines[0], buffer["replacement"], _lines[1]])
+    path = "./src/unit_00/unit_00.tex"
+    str_replacements = [
+        {"str": "{../unit\\_00}", "replacement": "{../unit\\_" + (str(number) if number > 10 else "0" + str(number)) + "}"},
+        {"str": "\\title{Unit 0}", "replacement": "\\title{" + name + "}"}
+    ]
+    lines = file_str_replace(path, str_replacements)
 
     return lines
 
@@ -42,68 +62,97 @@ def new_unit(name):
     unit = set_unit(current_unit()["number"] + 1)
     os.mkdir(unit["directory"])
 
+    # create new lesson_##.tex file
     with open(unit["path"], "a") as file:
         lines = preprocess_unit(unit["number"], name)
         file.write(lines)
         open(unit["directory"] + unit["name"] + ".tex.latexmain", "a")
     new_lesson(input("Lesson Name: "))
 
+    # append \unit{unit_name_here} to main.tex
+    str_replacements = [
+        {"str": "\\end{document}", "replacement": "\\unit{" + name + "}\n\\end{document}"}
+    ]
+    lines = file_str_replace("./src/main/main.tex", str_replacements)
+    with open("./src/main/main.tex", "w") as file:
+        file.write(lines)
 
-def set_lesson(unit, number):
+
+def set_lesson(unit, number, lesson_name):
+    # lol, so in set_unit the name doesn't have .tex but in this one it does
+    # wtf is my code man
     name = "lesson_" + (str(number) if number > 10 else "0" + str(number)) + ".tex"
     return {
         "directory": unit["directory"],
         "path": unit["directory"] + name,
         "name": name,
-        "number": int(number)
+        "number": int(number),
+        "lesson_name": lesson_name
     }
 
 
-def current_lesson(unit):
+def current_lesson(unit, lesson_name):
     dir = unit["directory"]
     files = [x for x in os.listdir(dir) if os.path.isfile(dir + x)]
     lesson = 0
     for file in files:
         match = re.search(r"\d+", file)
-        if "lesson_" in file and match and int(match.group) > lesson:
-            lesson = int(match.group)
+        if "lesson_" in file and match and int(match.group()) > lesson:
+            lesson = int(match.group())
 
-    return set_lesson(unit, int(lesson))
+    return set_lesson(unit, int(lesson), lesson_name)
 
 
-def preprocess_lesson(unit, name):
-    # write \input{\UnitPath/lesson_01.tex} in unit_01.tex
-    with open(unit["path"], "r") as file:
-        pass
+def preprocess_lesson(unit, lesson):
+    # append the lesson_##.tex to the end of unit_##.tex
+    path = unit["path"]
+    str_replacements = [
+        {"str": "\\end{document}", "replacement": "\\include{\\UnitPath/" + lesson["name"] + "}\n\\end{document}"}
+    ]
+    lines = file_str_replace(unit["path"], str_replacements)
+    with open(path, "w") as file:
+        file.write(lines)
 
-    with open("./src/unit_00/lesson_01.tex", "a") as template:
-        lines = template.read().rstrip()
-        for buffer in [
-            {"regex": "lesson\\_01", "replacement": name}
-        ]:
-            _lines = lines.split(buffer["regex"])
-            lines = "".join([_lines[0], buffer["replacement"], _lines[1]])
+    # use the unit/lesson_00.tex as template
+    path = "./src/unit_00/lesson_00.tex"
+    str_replacements = [
+        {"str": "lesson\\_00", "replacement": lesson["lesson_name"]}
+    ]
+    lines = file_str_replace(path, str_replacements)
 
     return lines
 
 
 def new_lesson(name):
     unit = current_unit()
-    lesson = current_lesson(unit)
-    if lesson["number"] == 0:
-        lesson = set_lesson(unit, lesson["number"] + 1)
+    lesson = current_lesson(unit, name)
+    lesson = set_lesson(unit, lesson["number"] + 1, name)
 
+    # create lesson_##.tex file
     with open(lesson["path"], "w") as file:
-        lines = preprocess_lesson(name)
+        lines = preprocess_lesson(unit, lesson)
+        file.write(lines)
+
+    # append \input{../unit_##/lesson_##.tex} to main.tex
+    str_replacements = [
+        {"str": "\\end{document}", "replacement": "\\input{../" + unit["name"] + "/" + lesson["name"] + "}\n\\end{document}"}
+    ]
+    print(str_replacements[0]["replacement"])
+    lines = file_str_replace("./src/main/main.tex", str_replacements)
+    with open("./src/main/main.tex", "w") as file:
         file.write(lines)
 
 
 command = int(input("""Commands
-(0) New Unit
-(1) New Lesson
+(0) New Template
+(1) New Unit
+(2) New Lesson
 """))
 
 if command == 0:
+    new_template(input("Template Name: "))
     new_unit(input("Unit Name: "))
 elif command == 1:
+    new_unit(input("Unit Name: "))
+elif command == 2:
     new_lesson(input("Lesson Name: "))
