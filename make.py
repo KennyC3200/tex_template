@@ -72,18 +72,17 @@ class Unit:
 class Lesson:
     template_file_data = FileData("./src/.unit/lesson.tex")
 
-    def __init__(self, number):
+    def __init__(self, unit, number):
         self.number = number
         self.number_str = str(number) if number >= 10 else "0" + str(number)
         self.file_data = FileData(
-            f"./src/unit_{self.number_str}/"
-            f"lesson_{self.number_str}.tex"
-        )
+            unit.file_data.dir +
+            f"lesson_{self.number_str}.tex")
 
     @staticmethod
     def new(unit_number, name):
         unit = Unit(unit_number)
-        lesson = Lesson(Lesson.current(unit).number)
+        lesson = Lesson(unit, Lesson.current(unit).number + 1)
 
         with open(lesson.file_data.path, "a") as file:
             token_replacements = [["Lesson", name]]
@@ -103,15 +102,15 @@ class Lesson:
     def current(unit):
         dir = unit.file_data.dir
         files = [x for x in os.listdir(dir) if os.path.isfile(dir + x)]
-        lesson_number = 1
+        lesson_number = 0
 
         for file in files:
-            match = re.search(r"\d+", dir)
-            if "lesson_" in dir \
+            match = re.search(r"\d+", file)
+            if "lesson_" in file \
                     and match and (x := int(match.group())) > lesson_number:
                 lesson_number = x
 
-        return Lesson(lesson_number)
+        return Lesson(unit, lesson_number)
 
 
 def main():
