@@ -29,6 +29,12 @@ class FileHelper:
         return file_text
 
 
+class Template:
+    @staticmethod
+    def new(name):
+        pass
+
+
 class Unit:
     template_file_data = FileData("./src/.unit/unit.tex")
 
@@ -56,12 +62,12 @@ class Unit:
                 token_replacements)
             file.write(file_text)
 
-        # append to main.tex file
+        # append to template.tex file
         token_replacements = [["\\end{document}", f"\\unit{{{name}}}\n\\end{{document}}"]]
         file_text = FileHelper.find_and_replace(
-            "./src/main/main.tex",
+            "./src/template/template.tex",
             token_replacements)
-        with open("./src/main/main.tex", "w") as file:
+        with open("./src/template/template.tex", "w") as file:
             file.write(file_text)
 
     @staticmethod
@@ -109,12 +115,12 @@ class Lesson:
         with open(unit.file_data.path, "w") as file:
             file.write(file_text)
 
-        # append to main.tex file
+        # append to template.tex file
         token_replacements = [["\\end{document}", f"\\input{{../{unit.file_data.filename}/{lesson.file_data.full_filename}}}\n\\end{{document}}"]]
         file_text = FileHelper.find_and_replace(
-            "./src/main/main.tex",
+            "./src/template/template.tex",
             token_replacements)
-        with open("./src/main/main.tex", "w") as file:
+        with open("./src/template/template.tex", "w") as file:
             file.write(file_text)
 
     @staticmethod
