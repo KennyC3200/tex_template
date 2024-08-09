@@ -70,6 +70,10 @@ class Unit:
                 token_replacements)
             file.write(file_text)
 
+        # create unit_##.tex.latexmain
+        _ = open(unit.file_data.path + ".latexmain", "a")
+        _.close()
+
         # append to template.tex file
         token_replacements = [["\\end{document}", f"\\unit{{{name}}}\n\\end{{document}}"]]
         file_text = FileHelper.find_and_replace(
@@ -172,6 +176,9 @@ def main():
         Lesson.new(unit_number, name)
     elif command == "2":
         unit_number = int(input("Unit Number: "))
+        if unit_number <= 0 or unit_number > Unit.current().number:
+            print("Please enter a valid unit")
+            exit()
         name = input("Lesson Name: ")
         Lesson.new(unit_number, name)
 
