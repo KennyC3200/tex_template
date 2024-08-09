@@ -44,6 +44,7 @@ class Unit:
     def new(name):
         unit = Unit(Unit.current().number + 1)
 
+        # create new unit_## directory and unit_##.tex file
         os.mkdir(unit.file_data.dir)
         with open(unit.file_data.path, "a") as file:
             token_replacements = [
@@ -53,6 +54,14 @@ class Unit:
             file_text = FileHelper.find_and_replace(
                 Unit.template_file_data.path,
                 token_replacements)
+            file.write(file_text)
+
+        # append to main.tex file
+        token_replacements = [["\\end{document}", f"\\unit{{{name}}}\n\\end{{document}}"]]
+        file_text = FileHelper.find_and_replace(
+            "./src/main/main.tex",
+            token_replacements)
+        with open("./src/main/main.tex", "w") as file:
             file.write(file_text)
 
     @staticmethod
@@ -84,6 +93,7 @@ class Lesson:
         unit = Unit(unit_number)
         lesson = Lesson(unit, Lesson.current(unit).number + 1)
 
+        # create new lesson_##.tex file
         with open(lesson.file_data.path, "a") as file:
             token_replacements = [["Lesson", name]]
             file_text = FileHelper.find_and_replace(
@@ -91,11 +101,20 @@ class Lesson:
                 token_replacements)
             file.write(file_text)
 
+        # append to unit_##.tex file
         token_replacements = [["\\end{document}", f"\\input{{\\UnitDir/{lesson.file_data.full_filename}}}\n\\end{{document}}"]]
         file_text = FileHelper.find_and_replace(
             unit.file_data.path,
             token_replacements)
         with open(unit.file_data.path, "w") as file:
+            file.write(file_text)
+
+        # append to main.tex file
+        token_replacements = [["\\end{document}", f"\\input{{../{unit.file_data.filename}/{lesson.file_data.full_filename}}}\n\\end{{document}}"]]
+        file_text = FileHelper.find_and_replace(
+            "./src/main/main.tex",
+            token_replacements)
+        with open("./src/main/main.tex", "w") as file:
             file.write(file_text)
 
     @staticmethod
