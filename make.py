@@ -31,8 +31,16 @@ class FileHelper:
 
 class Template:
     @staticmethod
-    def new(name):
-        pass
+    def new(name, author_name):
+        token_replacements = [
+            ["Template", name],
+            ["Kenny Chen", author_name]
+        ]
+        file_text = FileHelper.find_and_replace(
+            "./src/template/template.tex",
+            token_replacements)
+        with open("./src/template/template.tex", "w") as file:
+            file.write(file_text)
 
 
 class Unit:
@@ -146,7 +154,13 @@ def main():
                     "(2) New Lesson in Unit\n")
 
     if command == "n":
-        pass
+        name = input("Template Name: ")
+        author_name = input("Author Name: ")
+        Template.new(name, author_name)
+        unit_name = input("Unit Name: ")
+        Unit.new(unit_name)
+        lesson_name = input("Lesson Name: ")
+        Lesson.new(Unit.current().number, lesson_name)
     elif command == "0":
         name = input("Unit Name: ")
         Unit.new(name)
