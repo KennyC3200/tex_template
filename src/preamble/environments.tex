@@ -1,41 +1,53 @@
 \newenvironment{enum}
 {
-\begin{enumerate}
-\setlength\itemsep{0.5em}
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
 }
-{\end{enumerate}}
+{
+    \end{enumerate}
+}
 
 \newenvironment{enum-alpha}
 {
-\begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=(\alph*)]
 }
-{\end{enumerate}}
+{
+    \end{enumerate}
+}
 
 \newenvironment{enum-roman}
 {
-\begin{enumerate}[label=(\roman*)]
+    \begin{enumerate}[label=(\roman*)]
 }
-{\end{enumerate}}
+{
+    \end{enumerate}
+}
 
 \newenvironment{bulleted}
 {
-\begin{itemize}
+    \begin{itemize}
 }
-{\end{itemize}}
+{
+    \end{itemize}
+}
 
 \newenvironment{problems}
 {
     \subsection{Problems}
     \begin{enumerate}
 }
-{\end{enumerate}}
+{
+    \end{enumerate}
+}
 
 \newenvironment{solutions}
 {
     \subsection{Solutions}
     \begin{enumerate}
 }
-{\end{enumerate}}
+{
+    \end{enumerate}
+}
 
 \def\sampleT{\setbox0=\hbox{\bf Sample: }%
    \noindent \hangindent=\wd0 \box0 \ignorespaces

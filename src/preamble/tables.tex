@@ -1,2 +1,25 @@
 \usepackage{tabularx}
 \usepackage{hhline}
+\usepackage{xcolor}        % background colors
+\PassOptionsToPackage{table}{xcolor}
+\usepackage{booktabs}      % better looking table lines
+\usepackage{array}         % custom column styles
+\usepackage{colortbl}      % colored cells
+
+\definecolor{HeaderColor}{RGB}{230, 231, 232}
+
+\newenvironment{table-custom}[1][|X X X|]
+{
+    \table[H]
+    \centering
+    \setlength{\tabcolsep}{12pt}          % column spacing
+    \renewcommand{\arraystretch}{1.2}     % row spacing
+    \arrayrulecolor{black}                % table border color
+    \tabularx{\textwidth}{#1}
+    \hline
+    \rowcolor{HeaderColor}
+}
+{
+    \endtabularx
+    \endtable
+}
