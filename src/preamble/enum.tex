@@ -1,2 +1,28 @@
 \usepackage{enumerate}
 \usepackage{enumitem}
+
+\newenvironment{enum}
+{
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+}
+{
+    \end{enumerate}
+}
+
+\newenvironment{enum-alph}
+{
+    \begin{enumerate}[label=(\alph*)]
+}
+{
+    \end{enumerate}
+}
+
+\newenvironment{enum-roman}
+{
+    \begin{enumerate}[label=(\roman*)]
+}
+{
+    \end{enumerate}
+}
+
