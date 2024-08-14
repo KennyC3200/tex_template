@@ -4,3 +4,16 @@
 \usepackage{siunitx}
 
 \newcommand{\ch}{\ce}
+
+\newcommand*\up{\fbox{$\mathord\upharpoonleft\phantom{\downharpoonright}$}}%
+\newcommand*\dwn{\fbox{$\mathord\downharpoonleft\phantom{\upharpoonright}$}}%
+\newcommand*\updwn{\fbox{$\upharpoonleft\downharpoonright$}}%
+\newcommand*\emp{\fbox{$\phantom{\downharpoonright}\phantom{\downharpoonright}$}}%
+\newcommand{\electron}[2]{{%
+        \setlength\tabcolsep{0pt}% remove extra horizontal space from tabular
+        \setlength\fboxrule{0.2pt}% uncomment for original line width
+        \begin{tabular}{c}
+            \fboxsep=0pt\fbox{\fboxsep=3pt#2}\\[2pt]
+            #1
+        \end{tabular}%
+}}
