@@ -2,7 +2,7 @@
 This is a template used for LaTeX note taking. Run `Python3 make.py` to get started.
 
 # TODO
-- Better tables
+- Decorate the samples
 - Using arrow keys to navigate the CLI
 - CLI in Python that parses a select `lesson_##.tex` and shuffles the questions. Consider two scenarios:
     1. Multiple choice: generate the choices (A), (B), (C), ...
