@@ -9,3 +9,4 @@ This is a template used for LaTeX note taking. Run `Python3 make.py` to get star
     2. Response: generate the answer once the user has input
     - Add:
     - Issue: how are we going to parse the LaTex? Might be better to use a JS thing then
+- Rewrite in RUST?
