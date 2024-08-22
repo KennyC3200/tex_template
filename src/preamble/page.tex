@@ -18,17 +18,23 @@
 % \titlespacing*{\section}{0pt}{\baselineskip}{0.3\baselineskip}
 % \titlespacing*{\subsection}{0pt}{\baselineskip}{0.3\baselineskip}
 \titleformat{\section}
-    {\fontsize{14}{16}\sffamily\MakeUppercase} % format for whole line
-    {\thesection}                              % how to show number
-    {1em}                                      % space between number and text
-    {}                                         % formatting for just the text
-    []                                         % formatting for after the text
+    {\fontsize{14}{16}\sffamily} % format for whole line
+    {\thesection}                % how to show number
+    {1em}                        % space between number and text
+    {\MakeUppercase}             % formatting for just the text
+    []                           % formatting for after the text
 \titleformat{\subsection}
-    {\fontsize{12}{16}\sffamily\bfseries\selectfont} % format for whole line
-    {\thesection}                                    % how to show number
-    {1em}                                            % space between number and text
-    {}                                               % formatting for just the text
-    []                                               % formatting for after the text
+    {\fontsize{12}{16}\sffamily\bfseries\selectfont}
+    {\thesection}
+    {1em}
+    {}
+    []
+\titleformat{\subsubsection}
+    {\fontsize{12}{16}\sffamily\ttfamily\selectfont}
+    {\thesection}
+    {1em}
+    {}
+    []
 
 % clickable TOC sections
 \usepackage{hyperref}
