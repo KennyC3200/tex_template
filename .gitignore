@@ -11,3 +11,5 @@ src/test/
 *.toc
 *.out
 *.latexmain
+
+!res/equilibrium.pdf
